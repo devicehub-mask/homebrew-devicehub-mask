@@ -31,21 +31,28 @@ jobs:
           RELEASE_TAG: ${{ github.event.client_payload.tag || inputs.tag || 'nightly' }}
         run: ruby script/update.rb "$RELEASE_TAG"
 
-      - name: Validate Homebrew definitions
+      - name: Stage generated definitions
+        id: changes
         run: |
-          brew style Formula/devicehub-mask-headless.rb Casks/devicehub-mask.rb
-          brew audit --strict Formula/devicehub-mask-headless.rb
-          brew audit --cask Casks/devicehub-mask.rb
-          brew fetch Formula/devicehub-mask-headless.rb
-          brew fetch --cask Casks/devicehub-mask.rb
-
-      - name: Commit update
-        run: |
-          if git diff --quiet; then
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add Formula/devicehub-mask-headless.rb Casks/devicehub-mask.rb
-          git commit -m "chore: update DeviceHub Mask release"
-          git push
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore: update DeviceHub Mask release"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validate Homebrew definitions
+        run: |
+          brew tap boa-z/devicehub-mask "file://${GITHUB_WORKSPACE}"
+          brew style boa-z/devicehub-mask/devicehub-mask-headless boa-z/devicehub-mask/devicehub-mask
+          brew audit --strict boa-z/devicehub-mask/devicehub-mask-headless
+          brew audit --cask boa-z/devicehub-mask/devicehub-mask
+          brew fetch boa-z/devicehub-mask/devicehub-mask-headless
+          brew fetch --cask boa-z/devicehub-mask/devicehub-mask
+
+      - name: Push update
+        if: steps.changes.outputs.changed == 'true'
+        run: git push
