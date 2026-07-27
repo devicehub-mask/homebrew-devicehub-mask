@@ -1,0 +1,50 @@
+name: Update Formula and Cask
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Upstream release tag
+        required: true
+        default: nightly
+        type: string
+  repository_dispatch:
+    types: [devicehub-release]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-homebrew-tap
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: macos-14
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Update release metadata
+        env:
+          RELEASE_TAG: ${{ github.event.client_payload.tag || inputs.tag || 'nightly' }}
+        run: ruby script/update.rb "$RELEASE_TAG"
+
+      - name: Validate Homebrew definitions
+        run: |
+          brew style Formula/devicehub-mask-headless.rb Casks/devicehub-mask.rb
+          brew audit --strict Formula/devicehub-mask-headless.rb
+          brew audit --cask Casks/devicehub-mask.rb
+          brew fetch Formula/devicehub-mask-headless.rb
+          brew fetch --cask Casks/devicehub-mask.rb
+
+      - name: Commit update
+        run: |
+          if git diff --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/devicehub-mask-headless.rb Casks/devicehub-mask.rb
+          git commit -m "chore: update DeviceHub Mask release"
+          git push
