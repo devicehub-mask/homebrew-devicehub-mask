@@ -40,7 +40,6 @@ formula = <<~RUBY
     desc "Headless iOS device control and browser service"
     homepage "https://github.com/boa-z/devicehub-mask"
     url "#{assets.fetch(headless).fetch("browser_download_url")}"
-    version "#{app_version}+#{build}"
     sha256 "#{checksum.call(headless)}"
     license "MIT"
 

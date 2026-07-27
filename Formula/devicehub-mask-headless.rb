@@ -2,7 +2,6 @@ class DevicehubMaskHeadless < Formula
   desc "Headless iOS device control and browser service"
   homepage "https://github.com/boa-z/devicehub-mask"
   url "https://github.com/boa-z/devicehub-mask/releases/download/nightly/devicehub-mask-headless_0.1.0%2B110_macos-universal.tar.gz"
-  version "0.1.0+110"
   sha256 "4b41541ea5692df423245c9ae9cebceb0aa618213529ffc8dccb5d27bf3880e0"
   license "MIT"
 
