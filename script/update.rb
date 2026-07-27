@@ -39,8 +39,8 @@ formula = <<~RUBY
   class DevicehubMaskHeadless < Formula
     desc "Headless iOS device control and browser service"
     homepage "https://github.com/boa-z/devicehub-mask"
-    version "#{app_version}+#{build}"
     url "#{assets.fetch(headless).fetch("browser_download_url")}"
+    version "#{app_version}+#{build}"
     sha256 "#{checksum.call(headless)}"
     license "MIT"
 
@@ -86,6 +86,8 @@ cask = <<~RUBY
     name "DeviceHub Mask"
     desc "Control iOS devices with screen mirroring, touch input, and diagnostics"
     homepage "https://github.com/boa-z/devicehub-mask"
+
+    depends_on macos: :ventura
 
     app "DeviceHub Mask.app"
 
