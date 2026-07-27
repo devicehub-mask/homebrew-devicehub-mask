@@ -27,6 +27,7 @@ jobs:
 
       - name: Update release metadata
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.event.client_payload.tag || inputs.tag || 'nightly' }}
         run: ruby script/update.rb "$RELEASE_TAG"
 

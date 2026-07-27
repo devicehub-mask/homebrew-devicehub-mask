@@ -11,7 +11,10 @@ ROOT = Pathname.new(__dir__).parent
 USER_AGENT = "devicehub-mask-homebrew-tap"
 
 def read_url(url)
-  URI.open(url, "User-Agent" => USER_AGENT, &:read)
+  headers = { "User-Agent" => USER_AGENT }
+  token = ENV["GITHUB_TOKEN"]
+  headers["Authorization"] = "Bearer #{token}" if URI(url).host == "api.github.com" && !token.to_s.empty?
+  URI.open(url, headers, &:read)
 end
 
 release = JSON.parse(read_url("https://api.github.com/repos/#{REPOSITORY}/releases/tags/#{TAG}"))
