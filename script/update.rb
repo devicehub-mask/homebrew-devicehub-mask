@@ -81,7 +81,7 @@ cask = <<~RUBY
     version "#{app_version},#{build}"
     sha256 "#{checksum.call(dmg)}"
 
-    url "#{assets.fetch(dmg).fetch("browser_download_url")}"
+    url "https://github.com/boa-z/devicehub-mask/releases/download/#{TAG}/devicehub-mask_\#{version.csv.first}%2B\#{version.csv.second}_universal.dmg"
     name "DeviceHub Mask"
     desc "Control iOS devices with screen mirroring, touch input, and diagnostics"
     homepage "https://github.com/boa-z/devicehub-mask"
