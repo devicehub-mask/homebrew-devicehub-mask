@@ -46,12 +46,12 @@ jobs:
 
       - name: Validate Homebrew definitions
         run: |
-          brew tap boa-z/devicehub-mask "file://${GITHUB_WORKSPACE}"
-          brew style boa-z/devicehub-mask/devicehub-mask-headless boa-z/devicehub-mask/devicehub-mask
-          brew audit --strict boa-z/devicehub-mask/devicehub-mask-headless
-          brew audit --cask boa-z/devicehub-mask/devicehub-mask
-          brew fetch boa-z/devicehub-mask/devicehub-mask-headless
-          brew fetch --cask boa-z/devicehub-mask/devicehub-mask
+          brew tap devicehub-mask/devicehub-mask "file://${GITHUB_WORKSPACE}"
+          brew style devicehub-mask/devicehub-mask/devicehub-mask-headless devicehub-mask/devicehub-mask/devicehub-mask
+          brew audit --strict devicehub-mask/devicehub-mask/devicehub-mask-headless
+          brew audit --cask devicehub-mask/devicehub-mask/devicehub-mask
+          brew fetch devicehub-mask/devicehub-mask/devicehub-mask-headless
+          brew fetch --cask devicehub-mask/devicehub-mask/devicehub-mask
 
       - name: Push update
         if: steps.changes.outputs.changed == 'true'

@@ -1,18 +1,18 @@
 # Homebrew Tap for DeviceHub Mask
 
-This tap distributes the macOS desktop application and the headless browser service from [DeviceHub Mask releases](https://github.com/boa-z/devicehub-mask/releases).
+This tap distributes the macOS desktop application and the headless browser service from [DeviceHub Mask releases](https://github.com/devicehub-mask/devicehub-mask/releases).
 
 ## Desktop application
 
 ```sh
-brew tap boa-z/devicehub-mask
+brew tap devicehub-mask/devicehub-mask
 brew install --cask devicehub-mask
 ```
 
 ## Headless service
 
 ```sh
-brew tap boa-z/devicehub-mask
+brew tap devicehub-mask/devicehub-mask
 brew install devicehub-mask-headless
 devicehub-headless --help
 ```

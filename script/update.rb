@@ -5,7 +5,7 @@ require "json"
 require "open-uri"
 require "pathname"
 
-REPOSITORY = "boa-z/devicehub-mask"
+REPOSITORY = "devicehub-mask/devicehub-mask"
 TAG = ARGV.fetch(0, "nightly")
 ROOT = Pathname.new(__dir__).parent
 USER_AGENT = "devicehub-mask-homebrew-tap"
@@ -41,7 +41,7 @@ end
 formula = <<~RUBY
   class DevicehubMaskHeadless < Formula
     desc "Headless iOS device control and browser service"
-    homepage "https://github.com/boa-z/devicehub-mask"
+    homepage "https://github.com/devicehub-mask/devicehub-mask"
     url "#{assets.fetch(headless).fetch("browser_download_url")}"
     sha256 "#{checksum.call(headless)}"
     license "MIT"
@@ -84,10 +84,10 @@ cask = <<~RUBY
     version "#{app_version},#{build}"
     sha256 "#{checksum.call(dmg)}"
 
-    url "https://github.com/boa-z/devicehub-mask/releases/download/#{TAG}/devicehub-mask_\#{version.csv.first}%2B\#{version.csv.second}_universal.dmg"
+    url "https://github.com/devicehub-mask/devicehub-mask/releases/download/#{TAG}/devicehub-mask_\#{version.csv.first}%2B\#{version.csv.second}_universal.dmg"
     name "DeviceHub Mask"
     desc "Control iOS devices with screen mirroring, touch input, and diagnostics"
-    homepage "https://github.com/boa-z/devicehub-mask"
+    homepage "https://github.com/devicehub-mask/devicehub-mask"
 
     depends_on macos: :ventura
 
